@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
+import java.util.List;
 
 /**
  * @author a.kovtun
@@ -58,9 +59,9 @@ public class FirstTest {
                 "Cannot find search input",
                 5
         );
-        assertThat(
+        assertThatText(
                 By.xpath("//*[contains(@text, 'Search…')]"),
-                "1Search…"
+                "Search…"
         );
 
         waitForElementAndSendKeys(
@@ -90,7 +91,14 @@ public class FirstTest {
                 "Cannot find search input",
                 5
         );
+        waitForElementPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title' and contains(@text,'Java')]"),
+                "Cannot find list with text Java",
+                7
+        );
 
+        List<WebElement> list = driver.findElementsByXPath("//*[@resource-id='org.wikipedia:id/page_list_item_title' and contains(@text,'Java')]");
+        Assert.assertTrue("only 1 or less article is found",list.size()>1);
 
         waitForElementAndClear(
                 By.id("org.wikipedia:id/search_src_text"),
@@ -108,6 +116,12 @@ public class FirstTest {
                 "X is still present on the page",
                 5
         );
+        waitForElementNotPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title' and contains(@text,'Java')]"),
+                "list did not disappear",
+                5
+        );
+
     }
 
     @Test
@@ -137,7 +151,7 @@ public class FirstTest {
                 15
         );
 
-        assertThat(
+        assertThatText(
                 By.id("org.wikipedia:id/view_page_title_text"),
                 "Java (programming language)"
         );
@@ -185,7 +199,7 @@ public class FirstTest {
         return element;
     }
 
-    private void assertThat(By by, String value)
+    private void assertThatText(By by, String value)
     {
         WebElement element = waitForElementPresent(by, value, 5);
         Assert.assertEquals("error! We see unexpected text " + value, element.getAttribute("text"), value);
