@@ -152,8 +152,7 @@ public class FirstTest {
                 "Cannot find article title",
                 15
         );
-
-        assertThatText(
+         assertThatText(
                 By.id("org.wikipedia:id/view_page_title_text"),
                 "Java (programming language)"
         );
@@ -202,7 +201,6 @@ public class FirstTest {
     }
 
     private void assertThatText(By by, String value)
-
     {
         WebElement element = waitForElementPresent(by, value, 5);
         Assert.assertEquals("error! We see unexpected text " + value, element.getAttribute("text"), value);
