@@ -40,12 +40,14 @@ public class FirstTest {
     }
 
     @After
+
     public void tearDown()
     {
         driver.quit();
     }
 
     @Test
+
     public void firstTest()
     {
         waitForElementAndClick(
@@ -200,6 +202,7 @@ public class FirstTest {
     }
 
     private void assertThatText(By by, String value)
+
     {
         WebElement element = waitForElementPresent(by, value, 5);
         Assert.assertEquals("error! We see unexpected text " + value, element.getAttribute("text"), value);
