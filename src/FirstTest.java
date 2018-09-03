@@ -368,6 +368,10 @@ public class FirstTest {
                 By.id("org.wikipedia:id/page_list_item_image"),
                 By.id(title_in_article)
         );
+        assertElementPresent(
+                By.id(title_in_article),
+                "element not present"
+        );
     }
 
     @Test
@@ -714,6 +718,12 @@ public class FirstTest {
             String default_message = "An element " + by.toString() + "supposed to be not present";
             throw new AssertionError(default_message + " " + error_message);
         }
+    }
+    private void assertElementPresent(By by, String error_message){
+        int amount_of_element = getAmountOfElements(by);
+        if (amount_of_element <= 0) {
+            throw new AssertionError(error_message);
+        } else LOG.info("OK");
     }
 
     private String waitForElementAndGetAttribute(By by, String attribute, String error_message, long timeoutInSeconds){
